@@ -15,7 +15,7 @@
                         <h4 class="h3 p-2">{{ $user->name }}</h4>
 
                         <div class="text-start">
-                            <p><strong>Role: </strong>{{ $user->role }}</p>
+                            <p><strong>Role: </strong>{{ $user->roles->first()?->name ?? 'Tidak ada' }}</p>
                             <p><strong>No Id: </strong>{{ $user->no_id }}</p>
                             <p><strong>Nama: </strong>{{ $user->name }}</p>
                             <p><strong>Email: </strong>{{ $user->email }}</p>
@@ -24,21 +24,9 @@
                             <div class="d-flex justify-content-center pt-2">
                                 <span class="mx-2 ">
                                     @include('components.back-besar-button', [
-                                        'url' => 'admin/users',
+                                        'url' => 'admin/setup/users',
                                         'id' => $user->id,
                                     ])
-                                </span>
-                                {{-- <span class="mx-2">
-                                    @include('components.edit-button', [
-                                        'url' => 'karyawans',
-                                        'id' => $karyawan->id,
-                                    ])
-                                </span>
-                                <span class="mx-2">
-                                    @include('components.delete-button', [
-                                        'url' => 'karyawans',
-                                        'id' => $karyawan->id,
-                                    ]) --}}
                                 </span>
                             </div>
                         </div>

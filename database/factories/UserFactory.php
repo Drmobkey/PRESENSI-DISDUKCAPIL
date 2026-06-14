@@ -29,7 +29,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'role' => 'karyawan',
             // 'no_id' => $this->faker->randomNumber(8),
             'tanggal_lahir' => $this->faker->date(),
             'status' => 'aktif',

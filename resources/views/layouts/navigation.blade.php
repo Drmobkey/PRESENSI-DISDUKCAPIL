@@ -18,7 +18,7 @@
             <span class="sidebar-text">{{ __('Dashboard') }}</span>
         </a>
     </li>
-    @if (Auth::check() && Auth::user()->role === 'admin')
+    @can('manage-users')
         <li class="nav-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
             <a href="{{ route('users.index') }}" class="nav-link">
                 <span class="sidebar-icon me-3">
@@ -27,17 +27,9 @@
                 <span class="sidebar-text">{{ __('Pegawai') }}</span>
             </a>
         </li>
-        {{-- <li class="nav-item {{ request()->routeIs('karyawans.index') ? 'active' : '' }}">
-        <a href="{{ route('karyawans.index') }}" class="nav-link">
-            <span class="sidebar-icon me-3">
-                <i class="fa-solid fa-users"></i>
-            </span>
-            <span class="sidebar-text">{{ __('Pegawai') }}</span>
-        </a>
-    </li> --}}
-    @endif
+    @endcan
 
-    @if (Auth::check() && Auth::user()->role === 'admin')
+    @can('manage-presensi')
         <li class="nav-item {{ request()->routeIs('presensis.index') ? 'active' : '' }}">
             <a href="{{ route('presensis.index') }}" class="nav-link">
                 <span class="sidebar-icon me-3">
@@ -46,9 +38,28 @@
                 <span class="sidebar-text">&nbsp;{{ __('Data Presensi') }}</span>
             </a>
         </li>
-    @endif
+    @endcan
 
-    @if (Auth::check() && Auth::user()->role === 'pegawai')
+    @can('manage-settings')
+        <li class="nav-item {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+            <a href="{{ route('roles.index') }}" class="nav-link">
+                <span class="sidebar-icon me-3">
+                    <i class="fa-solid fa-user-shield"></i>
+                </span>
+                <span class="sidebar-text">&nbsp;{{ __('Kelola Peran (Role)') }}</span>
+            </a>
+        </li>
+        <li class="nav-item {{ request()->routeIs('permissions.*') ? 'active' : '' }}">
+            <a href="{{ route('permissions.index') }}" class="nav-link">
+                <span class="sidebar-icon me-3">
+                    <i class="fa-solid fa-key"></i>
+                </span>
+                <span class="sidebar-text">&nbsp;{{ __('Kelola Hak Akses') }}</span>
+            </a>
+        </li>
+    @endcan
+
+    @can('do-presensi')
         <li class="nav-item {{ request()->routeIs('presensis.index') ? 'active' : '' }}">
             <a href="{{ route('presensis.index') }}" class="nav-link">
                 <span class="sidebar-icon me-3">
@@ -57,7 +68,7 @@
                 <span class="sidebar-text">&nbsp;{{ __('Presensi') }}</span>
             </a>
         </li>
-    @endif
+    @endcan
 
     {{-- <li class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}">
         <a href="{{ route('about') }}" class="nav-link">

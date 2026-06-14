@@ -38,7 +38,7 @@
             </div>
 
             <div id="user-table">
-                @include('admin.user.table', ['users' => $users])
+                @include('admin.setup.user.table', ['users' => $users])
             </div>
         </div>
     </div>
@@ -57,7 +57,6 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('user-table').innerHTML = data;
-                    document.getElementById('karyawan-table').innerHTML = data;
                 });
         });
     </script>

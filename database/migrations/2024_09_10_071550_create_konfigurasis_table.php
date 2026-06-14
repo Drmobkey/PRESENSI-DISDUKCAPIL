@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('konfigurasis', function (Blueprint $table) {
+        Schema::create('konfigurasis', function (Blueprint $table) {
             $table->id();
             $table->string('status_presensi')->default('ditutup');
-            $table->timestamps();
             $table->time('jam_buka')->nullable();
             $table->time('jam_tutup')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('konfigurasis', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('konfigurasis');
     }
 };

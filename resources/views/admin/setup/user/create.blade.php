@@ -8,11 +8,11 @@
                 <li class="breadcrumb-item"><a href="{{ route('users.index') }}">User</a></li>
                 <li class="breadcrumb-item active">Tambah</li>
             </ol>
-            @include('components.back-besar-button', ['url' => url('users')])
+            @include('components.back-besar-button', ['url' => url('admin/setup/users')])
 
             <div class="card mt-3">
                 <div class="card-body">
-                    <form action="{{ url('users') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ url('admin/setup/users') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <!-- Nama -->
@@ -30,13 +30,6 @@
                                         placeholder="Masukkan Email" required="">
                                 </div>
                             </div>
-
-                            {{-- <!-- No ID -->
-                            <div class="col-md-6 mb-3">
-                                <label for="no_id" class="form-label">No ID</label>
-                                <input type="text" class="form-control" id="no_id" name="no_id"
-                                    placeholder="Biarkan kosong untuk auto-generate">
-                            </div> --}}
 
                             <!-- Tanggal Lahir -->
                             <div class="col-md-6 mb-3">
@@ -70,6 +63,16 @@
                                     placeholder="Masukkan Nomor Telepon" required>
                             </div>
 
+                            <!-- Role -->
+                            <div class="col-md-6 mb-3">
+                                <label for="role">Role</label>
+                                <select class="form-select" id="role" name="role" required>
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
 
                         </div>
 
@@ -93,11 +96,9 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: '{{ Session::get('success') }}',
-                onClose: () => {
-                    window.location.replace =
-                        "{{ url('users') }}"; // Redirect ke halaman users setelah pesan alert ditutup
-                }
+                text: '{{ Session::get('success') }}'
+            }).then(() => {
+                window.location.href = "{{ url('admin/setup/users') }}";
             });
         </script>
     @endif

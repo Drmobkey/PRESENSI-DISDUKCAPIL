@@ -8,7 +8,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('users.index') }}">User</a></li>
                 <li class="breadcrumb-item active">Edit</li>
             </ol>
-            @include('components.back-besar-button', ['url' => 'admin/users', 'id' => $user->id])
+            @include('components.back-besar-button', ['url' => 'admin/setup/users', 'id' => $user->id])
 
             <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -66,9 +66,9 @@
                     <div class="col-md-6 mb-3">
                         <label for="role">Role</label>
                         <select name="role" id="role" class="form-select" required>
-                            <option value="pegawai" {{ old('role', $user->role) === 'pegawai' ? 'selected' : '' }}>pegawai
-                            <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>admin
-                            </option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->name }}" {{ old('role', $user->roles->first()?->name) === $role->name ? 'selected' : '' }}>{{ $role->name }}</option>
+                            @endforeach
                         </select>
                     </div>
 

@@ -15,23 +15,35 @@
             <div class="container mt-4">
 
                 @if (!empty($konfigurasi) && $konfigurasi->status_presensi === 'buka')
-                    <form id="presensiForm" action="{{ route('karyawan.presensi.store') }}" method="post">
-                        @csrf
-                        <p class="alert alert-info text-dark">
-                            Absen masuk telah dibuka. Silahkan absen dengan mengambil lokasi dahulu lalu klik Absen. Jika
-                            sudah, abaikan teks ini.
-                        </p><br />
-
-                        @if (!$presensiHariIni->isNotEmpty() || ($presensiHariIni->isNotEmpty() && $presensiHariIni->first()->jam_pulang))
+                    @if (!$presensiHariIni->isNotEmpty())
+                        <!-- Form Absen Masuk -->
+                        <form id="presensiForm" action="{{ route('presensis.store') }}" method="post">
+                            @csrf
+                            <p class="alert alert-info text-dark">
+                                Absen masuk telah dibuka. Silahkan absen dengan mengambil lokasi dahulu lalu klik Absen Masuk.
+                            </p><br />
                             <label for="lokasi">Lokasi:</label><br /><br />
                             <select name="lokasi" id="lokasiSelect" required></select><br /><br />
                             <button class="btn btn-secondary text-white" type="button" onclick="getLocation()">Ambil
                                 Lokasi</button><br /><br />
                             <button class="btn btn-primary" type="submit">Absen Masuk</button>
-                        @else
-                            <p class="btn btn-danger">Anda sudah melakukan absen masuk hari ini.</p>
-                        @endif
-                    </form>
+                        </form>
+                    @elseif ($presensiHariIni->isNotEmpty() && !$presensiHariIni->first()->jam_pulang)
+                        <!-- Form Absen Pulang -->
+                        <form id="presensiForm" action="{{ route('presensis.store') }}" method="post">
+                            @csrf
+                            <p class="alert alert-warning text-dark">
+                                Anda sudah melakukan Absen Masuk hari ini. Silahkan ambil lokasi kembali untuk melakukan Absen Pulang.
+                            </p><br />
+                            <label for="lokasi">Lokasi:</label><br /><br />
+                            <select name="lokasi" id="lokasiSelect" required></select><br /><br />
+                            <button class="btn btn-secondary text-white" type="button" onclick="getLocation()">Ambil
+                                Lokasi</button><br /><br />
+                            <button class="btn btn-danger" type="submit">Absen Pulang</button>
+                        </form>
+                    @else
+                        <p class="btn btn-success text-white">Anda sudah melakukan absen masuk dan pulang hari ini.</p>
+                    @endif
                 @else
                     <p class="btn btn-danger">Absen masuk ditutup oleh admin.</p>
                 @endif
